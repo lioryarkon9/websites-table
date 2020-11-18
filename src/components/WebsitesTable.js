@@ -4,7 +4,17 @@ import styled from "styled-components";
 import { useWebsiteTable } from "../useWebsiteTable";
 
 const WebsitesTable = () => {
-  const { prepareRow, page, headers } = useWebsiteTable();
+  const {
+    prepareRow,
+    page,
+    headers,
+    nextPage,
+    previousPage,
+    canPreviousPage,
+    canNextPage,
+    state,
+    pageOptions,
+  } = useWebsiteTable();
 
   const renderRow = (row, ri) => {
     prepareRow(row);
@@ -34,9 +44,25 @@ const WebsitesTable = () => {
         </thead>
         <tbody>{page.map(renderRow)}</tbody>
       </table>
+
+      <Pagination>
+        <button onClick={previousPage} disabled={!canPreviousPage}>
+          Previous
+        </button>{" "}
+        <span>{state.pageIndex}</span>/<span>{pageOptions.length}</span>{" "}
+        <button onClick={nextPage} disabled={!canNextPage}>
+          Next
+        </button>
+      </Pagination>
     </Container>
   );
 };
+
+const Pagination = styled.div`
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+`;
 
 const Container = styled.div`
   table {
@@ -63,10 +89,6 @@ const Container = styled.div`
         border-right: 0;
       }
     }
-  }
-
-  .pagination {
-    padding: 0.5rem;
   }
 `;
 
