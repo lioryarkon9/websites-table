@@ -26,7 +26,7 @@ export const useWebsiteTable = () => {
     {
       columns,
       data: useMemo(() => mock.items, []),
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, pageSize: 17 },
     },
     usePagination
   );
