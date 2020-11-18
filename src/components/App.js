@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { useWebsiteTable } from "../useWebsiteTable";
+import WebsitesTable from "./WebsitesTable";
 
 const App = () => {
   const [mode, setMode] = useState("table");
@@ -10,74 +10,56 @@ const App = () => {
     setMode(mode === "table" ? "json" : "table");
   };
 
-  const { prepareRow, page, headers } = useWebsiteTable();
-
-  if (mode === "json") {
-    return null;
-  }
-
-  const renderRow = (row, ri) => {
-    prepareRow(row);
-
-    return (
-      <tr key={ri} {...row.getRowProps()}>
-        {row.cells.map((cell, ci) => {
-          return (
-            <td key={ci} {...cell.getCellProps()}>
-              {cell.render("Cell")}
-            </td>
-          );
-        })}
-      </tr>
-    );
-  };
-
   return (
-    <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            {headers.map(({ Header }) => (
-              <th key={Header}>{Header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>{page.map(renderRow)}</tbody>
-      </table>
-    </TableContainer>
+		<Layout>
+			<WidthContainer>
+				<Content>
+					<ToggleMode>
+						<ToggleButton isActive={mode === "table"} onClick={toggleMode}>Table</ToggleButton>
+						<ToggleButton isActive={mode === "json"} onClick={toggleMode}>JSON</ToggleButton>
+					</ToggleMode>
+
+					{mode === "table" && (
+						<TableContainer>
+							<WebsitesTable />
+						</TableContainer>
+					)}
+					
+					{mode === "json" && (
+						<div>JSON Mode</div>
+					)}
+				</Content>
+			</WidthContainer>
+		</Layout>
   );
 };
 
+const ToggleButton = styled.button`
+	background-color: ${({isActive}) => isActive ? "green" : "transparent"};
+`;
+
+const ToggleMode = styled.div`
+	margin-bottom: 5px;
+`;
+
+const Layout = styled.div`
+	display: flex;
+	justify-content: center;
+	padding-top: 10px;
+`;
+
+const WidthContainer = styled.div`
+	min-width: 1000px;
+	max-width: 1700px;
+	display: flex;
+`;
+
+const Content = styled.div`
+	flex-grow: 1;
+`;
+
 const TableContainer = styled.div`
-  table {
-    width: 100%;
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
-
-  .pagination {
-    padding: 0.5rem;
-  }
+	flex-grow: 1;
 `;
 
 export default App;
