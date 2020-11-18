@@ -49,7 +49,7 @@ const WebsitesTable = () => {
         <button onClick={previousPage} disabled={!canPreviousPage}>
           Previous
         </button>{" "}
-        <span>{state.pageIndex}</span>/<span>{pageOptions.length}</span>{" "}
+        <span>{state.pageIndex + 1}</span>/<span>{pageOptions.length}</span>{" "}
         <button onClick={nextPage} disabled={!canNextPage}>
           Next
         </button>

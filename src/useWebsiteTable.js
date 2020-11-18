@@ -22,10 +22,27 @@ export const useWebsiteTable = () => {
     []
   );
 
+  const bySiteNameAndLatency = (
+    { siteName: siteNameA, latency: latencyA },
+    { siteName: siteNameB, latency: latencyB }
+  ) => {
+    if (siteNameA === siteNameB) {
+      if (latencyA > latencyB) {
+        return -1;
+      }
+    }
+
+    if (siteNameA < siteNameB) {
+      return -1;
+    }
+
+    return 1;
+  };
+
   return useTable(
     {
       columns,
-      data: useMemo(() => mock.items, []),
+      data: useMemo(() => [...mock.items].sort(bySiteNameAndLatency), []),
       initialState: { pageIndex: 0, pageSize: 17 },
     },
     usePagination
