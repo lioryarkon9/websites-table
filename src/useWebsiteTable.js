@@ -22,7 +22,7 @@ export const useWebsiteTable = () => {
     []
   );
 
-  const tableProps = useTable(
+  return useTable(
     {
       columns,
       data: useMemo(() => mock.items, []),
@@ -30,6 +30,4 @@ export const useWebsiteTable = () => {
     },
     usePagination
   );
-
-  return { ...tableProps };
 };
