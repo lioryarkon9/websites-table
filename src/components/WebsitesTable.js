@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useWebsiteTable } from "../useWebsiteTable";
 
-const WebsitesTable = () => {
+const WebsitesTable = ({ websites }) => {
   const {
     prepareRow,
     page,
@@ -14,7 +14,7 @@ const WebsitesTable = () => {
     canNextPage,
     state,
     pageOptions,
-  } = useWebsiteTable();
+  } = useWebsiteTable(websites);
 
   const renderRow = (row, ri) => {
     prepareRow(row);
@@ -49,7 +49,7 @@ const WebsitesTable = () => {
         <button onClick={previousPage} disabled={!canPreviousPage}>
           Previous
         </button>{" "}
-        <span>{state.pageIndex}</span>/<span>{pageOptions.length}</span>{" "}
+        <span>{state.pageIndex + 1}</span>/<span>{pageOptions.length}</span>{" "}
         <button onClick={nextPage} disabled={!canNextPage}>
           Next
         </button>
