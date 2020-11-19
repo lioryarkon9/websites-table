@@ -1,9 +1,7 @@
 import { useTable, usePagination } from "react-table";
 import { useMemo } from "react";
 
-import { mock } from "./mock";
-
-export const useWebsiteTable = () => {
+export const useWebsiteTable = (websites) => {
   const columns = useMemo(
     () => [
       {
@@ -42,7 +40,7 @@ export const useWebsiteTable = () => {
   return useTable(
     {
       columns,
-      data: useMemo(() => [...mock.items].sort(bySiteNameAndLatency), []),
+      data: useMemo(() => [...websites.items].sort(bySiteNameAndLatency), []),
       initialState: { pageIndex: 0, pageSize: 17 },
     },
     usePagination

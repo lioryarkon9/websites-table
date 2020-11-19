@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useWebsiteTable } from "../useWebsiteTable";
 
-const WebsitesTable = () => {
+const WebsitesTable = ({ websites }) => {
   const {
     prepareRow,
     page,
@@ -14,7 +14,7 @@ const WebsitesTable = () => {
     canNextPage,
     state,
     pageOptions,
-  } = useWebsiteTable();
+  } = useWebsiteTable(websites);
 
   const renderRow = (row, ri) => {
     prepareRow(row);

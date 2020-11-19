@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { mock } from "../mock";
+
 import WebsitesTable from "./WebsitesTable";
 
 const App = () => {
@@ -25,11 +27,15 @@ const App = () => {
 
           {mode === "table" && (
             <TableContainer>
-              <WebsitesTable />
+              <WebsitesTable websites={mock} />
             </TableContainer>
           )}
 
-          {mode === "json" && <div>JSON Mode</div>}
+          {mode === "json" && (
+            <pre>
+              <code>{JSON.stringify(mock.items, null, 2)}</code>
+            </pre>
+          )}
         </Content>
       </WidthContainer>
     </Layout>
