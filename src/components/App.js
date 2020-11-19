@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
-import { mock } from "../mock";
 
 import WebsitesTable from "./WebsitesTable";
 
 const App = () => {
   const [mode, setMode] = useState("table");
+  const [websites, setWebsites] = useState([]);
 
   const toggleMode = () => {
     setMode(mode === "table" ? "json" : "table");
   };
+
+  useEffect(function fetchWebsites() {
+    fetch("https://run.mocky.io/v3/8764cfad-da54-4b54-9ee0-685c347a0b2e")
+      .then((httpResponse) => httpResponse.json())
+      .then((websites) => setWebsites(websites.items));
+  }, []);
 
   return (
     <Layout>
@@ -27,13 +32,13 @@ const App = () => {
 
           {mode === "table" && (
             <TableContainer>
-              <WebsitesTable websites={mock} />
+              <WebsitesTable websites={websites} />
             </TableContainer>
           )}
 
           {mode === "json" && (
             <pre>
-              <code>{JSON.stringify(mock.items, null, 2)}</code>
+              <code>{JSON.stringify(websites, null, 2)}</code>
             </pre>
           )}
         </Content>
@@ -44,6 +49,8 @@ const App = () => {
 
 const ToggleButton = styled.button`
   background-color: ${({ isActive }) => (isActive ? "green" : "transparent")};
+  color: ${({ isActive }) => (isActive ? "#fff" : "inherit")};
+  font-weight: ${({ isActive }) => (isActive ? "bold" : "auto")};
 `;
 
 const ToggleMode = styled.div`
