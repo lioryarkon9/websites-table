@@ -40,12 +40,7 @@ const WebsitesTable = ({ websites }) => {
             {headers.map((column) => (
               <th key={column.Header}>
                 {column.Header}
-                <div>
-                  {column.canFilter &&
-                  (column.Header === "Name" || column.Header === "Latency")
-                    ? column.render("Filter")
-                    : null}
-                </div>
+                <div>{canRenderFilter(column) && column.render("Filter")}</div>
               </th>
             ))}
           </tr>
@@ -99,5 +94,8 @@ const Container = styled.div`
     }
   }
 `;
+
+const canRenderFilter = (column) =>
+  column.canFilter && (column.Header === "Name" || column.Header === "Latency");
 
 export default WebsitesTable;
