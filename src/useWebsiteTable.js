@@ -40,7 +40,7 @@ export const useWebsiteTable = (websites) => {
   return useTable(
     {
       columns,
-      data: useMemo(() => [...websites.items].sort(bySiteNameAndLatency), []),
+      data: useMemo(() => [...websites].sort(bySiteNameAndLatency), [websites]),
       initialState: { pageIndex: 0, pageSize: 17 },
     },
     usePagination
