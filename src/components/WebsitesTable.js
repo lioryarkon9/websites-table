@@ -37,8 +37,16 @@ const WebsitesTable = ({ websites }) => {
       <table>
         <thead>
           <tr>
-            {headers.map(({ Header }) => (
-              <th key={Header}>{Header}</th>
+            {headers.map((column) => (
+              <th key={column.Header}>
+                {column.Header}
+                <div>
+                  {column.canFilter &&
+                  (column.Header === "Name" || column.Header === "Latency")
+                    ? column.render("Filter")
+                    : null}
+                </div>
+              </th>
             ))}
           </tr>
         </thead>
