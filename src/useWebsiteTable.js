@@ -1,5 +1,8 @@
-import { useTable, usePagination } from "react-table";
+import { useTable, usePagination, useFilters } from "react-table";
 import { useMemo } from "react";
+
+import WebsiteNameFilter from "./components/WebsiteNameFilter";
+import LatencyFilter from "./components/LatencyFilter";
 
 export const useWebsiteTable = (websites) => {
   const columns = useMemo(
@@ -7,10 +10,22 @@ export const useWebsiteTable = (websites) => {
       {
         Header: "Name",
         accessor: "siteName",
+        filter: (rows, _, filterValue) =>
+          rows.filter(({ values }) => {
+            const websiteName = values.siteName;
+
+            return websiteName === undefined
+              ? true
+              : websiteName.toLowerCase().match(new RegExp(filterValue, "g"));
+          }),
+        Filter: WebsiteNameFilter,
       },
       {
         Header: "Latency",
         accessor: "latency",
+        filter: (rows, _, filterValue) =>
+          rows.filter(({ values }) => values.latency >= filterValue),
+        Filter: LatencyFilter,
       },
       {
         Header: "URL",
@@ -43,6 +58,7 @@ export const useWebsiteTable = (websites) => {
       data: useMemo(() => [...websites].sort(bySiteNameAndLatency), [websites]),
       initialState: { pageIndex: 0, pageSize: 17 },
     },
+    useFilters,
     usePagination
   );
 };
