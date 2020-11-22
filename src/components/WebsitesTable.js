@@ -38,8 +38,11 @@ const WebsitesTable = ({ websites }) => {
         <thead>
           <tr>
             {headers.map((column) => (
-              <th key={column.Header}>
-                {column.Header}
+              <th key={column.Header} {...getSortingProps(column)}>
+                {column.Header}{" "}
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}
+                </span>
                 <div>{canRenderFilter(column) && column.render("Filter")}</div>
               </th>
             ))}
@@ -97,5 +100,13 @@ const Container = styled.div`
 
 const canRenderFilter = (column) =>
   column.canFilter && (column.Header === "Name" || column.Header === "Latency");
+
+const getSortingProps = (column) => {
+  if (column.Header === "Name" || column.Header === "Latency") {
+    return column.getHeaderProps(column.getSortByToggleProps());
+  }
+
+  return {};
+};
 
 export default WebsitesTable;
