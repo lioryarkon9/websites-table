@@ -1,4 +1,4 @@
-import { useTable, usePagination, useFilters } from "react-table";
+import { useTable, usePagination, useFilters, useSortBy } from "react-table";
 import { useMemo } from "react";
 
 import WebsiteNameFilter from "./components/WebsiteNameFilter";
@@ -59,6 +59,7 @@ export const useWebsiteTable = (websites) => {
       initialState: { pageIndex: 0, pageSize: 17 },
     },
     useFilters,
+    useSortBy,
     usePagination
   );
 };
